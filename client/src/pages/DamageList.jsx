@@ -545,13 +545,17 @@ const DamageList = () => {
               <p className="text-gray-600">Theo dõi và xử lý các hư hỏng trên đường</p>
             </div>
             <div className="flex gap-3">
-              <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+              <button
+                aria-label="Xuất danh sách hư hỏng ra Excel"
+                className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
                 <Download className="w-5 h-5" />
                 Export Excel
               </button>
               <button
                 onClick={() => setShowAddModal(true)}
-                className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                aria-label="Mở biểu mẫu thêm hư hỏng mới"
+                className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
               >
                 <Plus className="w-5 h-5" />
                 Add new damage
