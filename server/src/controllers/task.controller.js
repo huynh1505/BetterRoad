@@ -145,14 +145,14 @@ export const createTask = async (req, res) => {
 
       // Check for foreign key constraint errors
       if (taskError.code === '23503') {
-        if (taskError.message.includes('damage_id')) {
-          return errorResponse(res, 'Invalid damage ID. The damage does not exist.', 400);
-        }
-        if (taskError.message.includes('assigned_to')) {
-          return errorResponse(res, 'Invalid staff ID. The staff member does not exist.', 400);
-        }
-        if (taskError.message.includes('created_by')) {
-          return errorResponse(res, 'Invalid user ID for created_by field.', 400);
+        const foreignKeyMessages = [
+          { field: 'damage_id', message: 'Invalid damage ID. The damage does not exist.' },
+          { field: 'assigned_to', message: 'Invalid staff ID. The staff member does not exist.' },
+          { field: 'created_by', message: 'Invalid user ID for created_by field.' },
+        ];
+        const matchedForeignKey = foreignKeyMessages.find(({ field }) => taskError.message.includes(field));
+        if (matchedForeignKey) {
+          return errorResponse(res, matchedForeignKey.message, 400);
         }
         return errorResponse(res, 'Foreign key constraint violation. Please check the linked records.', 400);
       }
