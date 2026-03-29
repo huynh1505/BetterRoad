@@ -4,6 +4,15 @@
 import { supabase } from '../config/supabase.js';
 import { successResponse, errorResponse } from '../utils/response.js';
 
+/**
+ * Creates a task for the authenticated company with validation on optional references.
+ * It normalizes nullable fields, verifies ownership of related records, and persists
+ * a new task in Supabase.
+ *
+ * @param {import('express').Request} req Express request containing task payload and user context.
+ * @param {import('express').Response} res Express response used to return standardized API output.
+ * @returns {Promise<import('express').Response>} JSON response with created task or validation/error details.
+ */
 export const createTask = async (req, res) => {
   try {
     const {
@@ -350,6 +359,14 @@ export const getStaffForTasks = async (req, res) => {
   }
 };
 
+/**
+ * Returns active damages for task assignment and enriches each record with related road metadata.
+ * The method uses a staged query flow to keep responses resilient when the road lookup fails.
+ *
+ * @param {import('express').Request} req Express request with authenticated company context.
+ * @param {import('express').Response} res Express response for standardized success/error payloads.
+ * @returns {Promise<import('express').Response>} JSON response containing normalized damages list.
+ */
 export const getDamagesForTasks = async (req, res) => {
   try {
     console.log('=== getDamagesForTasks START ===');
